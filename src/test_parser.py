@@ -27,17 +27,23 @@ class TestParser(unittest.TestCase):
         self.assertEqual(parse_date("1736927778000", timestamp="m"), dt.datetime(2025, 1, 15, 8, 56, 18, 000))
         self.assertEqual(parse_date("1736927778000100", timestamp="n"), dt.datetime(2025, 1, 15, 8, 56, 18, 100))
 
-    # def test_parse_date_iso_format(self):
-    #     self.assertEqual(parse_date("2025-01-15"), dt.datetime(2023, 4, 1))
-    #     self.assertEqual(parse_date("2025/01/15"), dt.datetime(2000, 2, 29))
+    def test_parse_date_iso_format(self):
+        self.assertEqual(parse_date("2025-01-15"), dt.datetime(2025, 1, 15))
+        self.assertEqual(parse_date("2025/01/15"), dt.datetime(2025, 1, 15))
+
+    def test_parse_date_hour(self):
+        self.assertEqual(parse_date("2025-01-15 08:56:18"), dt.datetime(2025, 1, 15, 8, 56, 18))
+        self.assertEqual(parse_date("2025/01/15 08:56:18"), dt.datetime(2025, 1, 15, 8, 56, 18))
+
+    def test_parse_date_hour(self):
+        self.assertEqual(parse_date("2025-01-15 08:56 AM"), dt.datetime(2025, 1, 15, 8, 56))
+        self.assertEqual(parse_date("2025/01/15 08:56 PM"), dt.datetime(2025, 1, 15, 20, 56))
+
 
     # def test_parse_date_iso_format_error(self):
     #     self.assertRaises(ValueError, parse_date("2025-13-15", "%Y-%m-%d"))
     #     self.assertEqual(parse_date("2023/12/41"), None)
 
-    # def test_parse_date_hour(self):
-    #     self.assertEqual(parse_date("2023-04-01 12:22:22"), dt.datetime(2023, 4, 1, 12, 22, 22))
-    #     self.assertEqual(parse_date("2000/02/29 12:22:22"), dt.datetime(2000, 2, 29, 12, 22, 22))
 
 
 if __name__ == '__main__':

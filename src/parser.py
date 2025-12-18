@@ -35,12 +35,20 @@ def parse_date(date_str: str, date_format=None, timestamp=None) -> dt:
     if '/' in date_str:
       return dt.datetime.strptime(date_str, "%Y/%m/%d")
   
-  # YYYY-MM-DD HH:MM:SS
+  # YYYY-MM-DD HH:MM:SS  YYYY/MM/DD HH:MM:SS
   pattern = "^(\d{4})[-\/]([0-1]{1}[0-9]{1})[-\/]([0-3]{1}[0-9]{1}) ([0-1]{1}[0-9]{1}):([0-5]{1}[0-9]{1}):([0-5]{1}[0-9]{1})$"
   if re.match(pattern, date_str):
     if '-' in date_str:
       return dt.datetime.strptime(date_str, "%Y-%m-%d %H:%M:%S")
     if '/' in date_str:
       return dt.datetime.strptime(date_str, "%Y/%m/%d %H:%M:%S")
-    
+
+  # 2025-01-15 8:56 AM   2025-01-15 8:56 PM
+  pattern = "^(\d{4})[-\/]([0-1]{1}[0-9]{1})[-\/]([0-3]{1}[0-9]{1}) ([0-1]{1}[0-9]{1}):([0-5]{1}[0-9]{1}) (A|P)?(M)?$"
+  if re.match(pattern, date_str):
+    if '-' in date_str:
+      return dt.datetime.strptime(date_str, "%Y-%m-%d %I:%M %p")
+    if '/' in date_str:
+      return dt.datetime.strptime(date_str, "%Y/%m/%d %I:%M %p")
+
   return None
