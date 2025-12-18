@@ -24,7 +24,7 @@ def parse_date(date_str: str, date_format=None, timestamp=None) -> dt:
           time_in_seconds = int(date_str)
           return dt.datetime.fromtimestamp(time_in_seconds)    
     except Exception as e:
-      raise Exception(f"Invalid timestamp: {e}")
+      raise exceptions.InvalidTimestampError(f"Invalid timestamp format for input: {e}")
 
   # ISO 8601 Format: YYYY-MM-DD
   # Custom Format:   YYYY/MM/DD

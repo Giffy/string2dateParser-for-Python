@@ -14,8 +14,8 @@ class InvalidDateFormatError(ParserError):
         self.message = message
         super().__init__(self.message)
 
-class InvalidDateFormatError(ParserError):
-    """Exception raised for errors in the input date format."""
-    def __init__(self, message="Invalid date format provided."):
+class InvalidTimestampError(ParserError):
+    """Exception raised for errors in the input timestamp."""
+    def __init__(self, message="Invalid timestamp format provided."):
         self.message = message
         super().__init__(self.message)
