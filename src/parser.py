@@ -1,12 +1,30 @@
 import datetime as dt
 import re
 import time
+import exceptions
 
 
 def parse_date(date_str: str, date_format=None, timestamp=None) -> dt:
 
   if date_format:
-    return dt.datetime.strptime(date_str, date_format)
+    try:
+      return dt.datetime.strptime(date_str, date_format)
+    except Exception as e:
+      raise exceptions.InvalidDateFormatError(f"Invalid date format for input: {date_str}. Expected format: {date_format}")
+  
+  if timestamp:
+    try:
+      if re.match('^\d{16}', date_str):
+          time_in_seconds = int(date_str)/1000000
+          return dt.datetime.fromtimestamp(time_in_seconds)
+      elif re.match('^\d{13}', date_str):
+          time_in_seconds = int(date_str)/1000
+          return dt.datetime.fromtimestamp(time_in_seconds)
+      elif re.match('^\d{10}', date_str):
+          time_in_seconds = int(date_str)
+          return dt.datetime.fromtimestamp(time_in_seconds)    
+    except Exception as e:
+      raise Exception(f"Invalid timestamp: {e}")
 
   # ISO 8601 Format: YYYY-MM-DD
   # Custom Format:   YYYY/MM/DD
